@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="am">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ለውድ አያንቱ ጥበቡ ❤️</title>
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts for Ethiopic Script & Classical Serif -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --primary-pink: #ff2a6d;
+        --soft-rose: #ff758c;
+        --rose-gold: #e0a96d;
+        --bg-deep: #0f0714;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Noto Sans Ethiopic', 'Playfair Display', Georgia, serif;
+        background: radial-gradient(circle at center, #23081e 0%, #110411 55%, #07010a 100%);
+        min-height: 100vh;
+        color: #ffffff;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      /* Ambient Particle Canvas */
+      #ambient-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Ambient Glowing Background Orbs */
+      .glow-orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(100px);
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.35;
+        animation: pulseGlow 10s ease-in-out infinite alternate;
+      }
+
+      .glow-orb-1 {
+        top: -10%;
+        left: 15%;
+        width: 380px;
+        height: 380px;
+        background: radial-gradient(circle, #ff2a6d 0%, transparent 70%);
+      }
+
+      .glow-orb-2 {
+        bottom: -10%;
+        right: 15%;
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(circle, #851c5a 0%, transparent 70%);
+      }
+
+      @keyframes pulseGlow {
+        0% { transform: scale(1) translate(0, 0); opacity: 0.25; }
+        100% { transform: scale(1.18) translate(15px, -15px); opacity: 0.45; }
+      }
+
+      /* Glassmorphism Card Container */
+      .glass-card {
+        background: rgba(22, 10, 26, 0.55);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid rgba(224, 169, 109, 0.3);
+        border-radius: 28px;
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75),
+                    inset 0 1px 2px rgba(255, 255, 255, 0.2),
+                    0 0 35px rgba(255, 42, 109, 0.15);
+      }
+
+      /* Glowing text accents */
+      .glow-text {
+        text-shadow: 0 0 12px rgba(255, 42, 109, 0.5), 0 0 22px rgba(224, 169, 109, 0.3);
+      }
+
+      /* Typing Cursor */
+      .typing-cursor {
+        display: inline-block;
+        width: 3px;
+        height: 1.2em;
+        background-color: var(--soft-rose);
+        vertical-align: middle;
+        margin-left: 2px;
+        box-shadow: 0 0 8px var(--primary-pink);
+        animation: blink 0.75s infinite;
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+      /* Rose Gold Custom Button */
+      .rose-gold-btn {
+        background: linear-gradient(135deg, #ff2a6d 0%, #e0a96d 100%);
+        box-shadow: 0 0 20px rgba(255, 42, 109, 0.35);
+        transition: all 0.3s ease;
+      }
+
+      .rose-gold-btn:hover {
+        box-shadow: 0 0 30px rgba(255, 42, 109, 0.65), 0 0 15px rgba(224, 169, 109, 0.5);
+        transform: translateY(-2px);
+      }
+
+      /* Floating Hearts FX */
+      .burst-heart {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        animation: floatUpAndFade 2.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+      }
+
+      @keyframes floatUpAndFade {
+        0% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+        }
+        50% { opacity: 0.95; }
+        100% {
+          opacity: 0;
+          transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.5) rotate(var(--rot));
+        }
+      }
+
+      /* Audio Equalizer Sound Bars */
+      .sound-bar {
+        width: 3px;
+        height: 16px;
+        background-color: var(--soft-rose);
+        border-radius: 4px;
+        animation: soundWave 1.2s ease-in-out infinite alternate;
+      }
+
+      .sound-bar:nth-child(2) { animation-delay: 0.2s; }
+      .sound-bar:nth-child(3) { animation-delay: 0.4s; }
+      .sound-bar:nth-child(4) { animation-delay: 0.15s; }
+
+      .paused .sound-bar {
+        animation-play-state: paused;
+        height: 4px !important;
+      }
+
+      @keyframes soundWave {
+        0% { height: 4px; }
+        100% { height: 20px; }
+      }
+    </style>
+  </head>
+  <body class="flex flex-col min-h-screen justify-between items-center p-4 sm:p-6">
+
+    <!-- Background Orbs and Particles -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Top Navigation Bar -->
+    <header class="w-full max-w-2xl flex justify-between items-center z-20 pt-2 pb-4">
+      <div class="flex items-center gap-2 text-rose-300 font-medium text-sm sm:text-base">
+        <i class="fa-solid fa-heart text-red-500 animate-pulse"></i>
+        <span>ልዩ የፍቅር ደብዳቤ</span>
+      </div>
+
+      <!-- Piano Music Synthesizer Controller -->
+      <button
+        id="audioBtn"
+        class="bg-white/10 backdrop-blur-md px-4 py-2 rounded-full flex items-center gap-3 text-xs sm:text-sm text-pink-200 hover:text-white transition-all border border-amber-500/30 hover:border-amber-400"
+        title="የፍቅር ዜማ አጫውት / አቁም"
+      >
+        <div id="soundBars" class="flex items-center gap-1 h-5 paused">
+          <div class="sound-bar"></div>
+          <div class="sound-bar"></div>
+          <div class="sound-bar"></div>
+          <div class="sound-bar"></div>
+        </div>
+        <span id="audioText">ዜማ አጫውት</span>
+        <i class="fa-solid fa-music text-amber-400"></i>
+      </button>
+    </header>
+
+    <!-- Main Content Container: Love Letter Card -->
+    <main class="w-full max-w-2xl z-10 my-auto">
+      <div class="glass-card p-6 sm:p-10 relative overflow-hidden my-4">
+        
+        <!-- Header & Greeting -->
+        <div class="border-b border-amber-500/30 pb-4 mb-6 flex justify-between items-end">
+          <div>
+            <span class="text-xs text-amber-300 font-mono tracking-widest uppercase block mb-1">DEEPLY FROM THE HEART</span>
+            <h1 class="text-2xl sm:text-3xl font-bold text-pink-100 tracking-wide font-serif glow-text">
+              ለውድ አያንቱ ጥበቡ,
+            </h1>
+          </div>
+          <i class="fa-solid fa-envelope-open-text text-3xl sm:text-4xl text-pink-500/30"></i>
+        </div>
+
+        <!-- Quick Reveal Toggle Button -->
+        <div class="flex justify-end mb-4">
+          <button
+            id="showFullBtn"
+            class="text-xs text-amber-300/80 hover:text-amber-200 underline flex items-center gap-1.5 transition-colors"
+          >
+            <i class="fa-solid fa-bolt"></i>
+            <span>ሙሉውን ጽሁፍ አሳይ</span>
+          </button>
+        </div>
+
+        <!-- Letter Body Content -->
+        <div class="text-base sm:text-lg text-pink-50/95 leading-relaxed font-light min-h-[220px] mb-8 tracking-wide">
+          <span id="typedText"></span><span id="cursor" class="typing-cursor"></span>
+        </div>
+
+        <!-- Closing Signature & Action Button -->
+        <div class="border-t border-amber-500/30 pt-6 flex flex-col sm:flex-row justify-between items-center gap-5">
+          <div class="text-right w-full sm:w-auto">
+            <p class="text-xl sm:text-2xl font-bold text-pink-400 glow-text">
+              በጣም ነው የማፈቅርሽ,
+            </p>
+            <p class="text-base text-amber-200/90 mt-1 italic font-medium">
+              ከደረጄ ሰብሰቤ ❤️
+            </p>
+          </div>
+
+          <!-- Interactive Heart Burst Button -->
+          <button
+            id="heartBurstBtn"
+            class="rose-gold-btn px-6 py-3 rounded-full text-white font-semibold flex items-center gap-2.5 text-sm sm:text-base cursor-pointer"
+          >
+            <i class="fa-solid fa-heart text-white"></i>
+            <span>ፍቅር ላክ ❤️</span>
+          </button>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-4 z-20 text-xs text-pink-300/40 font-light">
+      የተሰራው በሙሉ ፍቅርና አክብሮት ለውድ አያንቱ • Dereje Sebsebe
+    </footer>
+
+    <!-- JavaScript Interactions & Audio Synthesizer -->
+    <script>
+      // 1. Amharic Message Content
+      const message = "ሰላም አዩዬ እንዴት ነሽ፡፡ይህን እያየሽ አጠገብሽ ሆኔ ስሜትሽ ባይ ደስ ይለኝ ነበር ነገር ግን እንዲህ ሳይሻል አይቀርም፡፡ይህ ስልሽ በጣም ይቅርታ ነገርግን ልነግርሽ ይገባል፡፡አዩዬ በፊት በፊት ልተዋወቅሽና ልገባባሽ ነበር የምፈልገው ከተዋወኩሽ በኃላ ግን ይበልጥ ወደድኩሽ አፈቀርኩሸ ያው 50% እንደማይሳካልኝ አቃለው ግን አልሞከርኩም ብዬ እንዲቆጨኝ አልፈልግም፡፡አዩዬ የማልዋሽሽ ነገር ቢኖር በጣም ቆንጂዬ ሴት ነሽ እናም ካንቺ የማረከኝ ነገር ቢኖር የውስጥ ሰላምሽ ነው እንደ እኔ ቢሳካልኝ እና እጮኛዬ ብትሆኚ ደስ ይለኛል በተረፈ ግን በጣም ነው የማመሰግነው ስላሳለፍነው ጊዜ ከፈለግሺኝ ግን ሁሉ ጊዜም ላንቺ በሬም ልቤም ክፍት ነው፡፡";
+
+      const typedTextSpan = document.getElementById("typedText");
+      const cursorSpan = document.getElementById("cursor");
+      const showFullBtn = document.getElementById("showFullBtn");
+      const heartBurstBtn = document.getElementById("heartBurstBtn");
+
+      let index = 0;
+      let typingTimeout = null;
+      let isTypingFinished = false;
+
+      // Typewriter function
+      function typeLetter() {
+        if (index < message.length) {
+          typedTextSpan.textContent += message.charAt(index);
+          index++;
+          const char = message.charAt(index - 1);
+          let speed = 30 + Math.random() * 20;
+          if (char === "፤" || char === "፡" || char === "።") speed += 200;
+          typingTimeout = setTimeout(typeLetter, speed);
+        } else {
+          finishTyping();
+        }
+      }
+
+      function finishTyping() {
+        isTypingFinished = true;
+        cursorSpan.style.display = "none";
+        showFullBtn.style.display = "none";
+      }
+
+      // Start Typewriter on page load after brief pause
+      setTimeout(typeLetter, 600);
+
+      // Instant Reveal Button Logic
+      showFullBtn.addEventListener("click", () => {
+        if (typingTimeout) clearTimeout(typingTimeout);
+        typedTextSpan.textContent = message;
+        finishTyping();
+      });
+
+      // 2. Interactive Heart Burst Particles
+      function triggerHeartBurst(originX, originY, count = 22) {
+        const colors = ["#ff2a6d", "#ff758c", "#e0a96d", "#ffb3c1", "#ffffff"];
+        const icons = ["fa-heart", "fa-heart", "fa-sparkles"];
+
+        for (let i = 0; i < count; i++) {
+          const heart = document.createElement("i");
+          const icon = icons[Math.floor(Math.random() * icons.length)];
+          heart.className = `fa-solid ${icon} burst-heart`;
+          
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const size = Math.random() * 22 + 14;
+          
+          const angle = Math.random() * Math.PI * 2;
+          const distance = Math.random() * 200 + 60;
+          const dx = Math.cos(angle) * distance + "px";
+          const dy = Math.sin(angle) * distance - 90 + "px";
+          const rot = (Math.random() - 0.5) * 360 + "deg";
+
+          heart.style.left = originX + "px";
+          heart.style.top = originY + "px";
+          heart.style.color = color;
+          heart.style.fontSize = size + "px";
+          heart.style.setProperty("--dx", dx);
+          heart.style.setProperty("--dy", dy);
+          heart.style.setProperty("--rot", rot);
+
+          document.body.appendChild(heart);
+
+          setTimeout(() => heart.remove(), 2400);
+        }
+      }
+
+      heartBurstBtn.addEventListener("click", () => {
+        const rect = heartBurstBtn.getBoundingClientRect();
+        triggerHeartBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 25);
+      });
+
+      // 3. Web Audio API Piano Synthesizer
+      let audioCtx = null;
+      let isPlayingAudio = false;
+      let audioInterval = null;
+
+      const audioBtn = document.getElementById("audioBtn");
+      const soundBars = document.getElementById("soundBars");
+      const audioText = document.getElementById("audioText");
+
+      const pianoNotes = [
+        [261.63, 329.63, 392.00, 493.88], // C maj7
+        [220.00, 261.63, 329.63, 392.00], // Am7
+        [174.61, 220.00, 261.63, 349.23], // F maj7
+        [196.00, 246.94, 293.66, 392.00]  // G7
+      ];
+
+      function playPianoNote(freq) {
+        if (!audioCtx) return;
+        try {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+          gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2.8);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start();
+          osc.stop(audioCtx.currentTime + 2.8);
+        } catch(e) {}
+      }
+
+      function startPianoMusic() {
+        if (isPlayingAudio) return;
+        
+        if (!audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          audioCtx = new AudioContext();
+        }
+
+        if (audioCtx.state === "suspended") {
+          audioCtx.resume();
+        }
+
+        isPlayingAudio = true;
+        soundBars.classList.remove("paused");
+        audioText.textContent = "ዜማ አቁም";
+
+        let chordIndex = 0;
+        let noteStep = 0;
+
+        audioInterval = setInterval(() => {
+          if (!isPlayingAudio) return;
+          const currentChord = pianoNotes[chordIndex];
+          const note = currentChord[noteStep % currentChord.length];
+          playPianoNote(note);
+
+          noteStep++;
+          if (noteStep % 4 === 0) {
+            chordIndex = (chordIndex + 1) % pianoNotes.length;
+          }
+        }, 650);
+      }
+
+      function stopPianoMusic() {
+        isPlayingAudio = false;
+        if (audioInterval) clearInterval(audioInterval);
+        soundBars.classList.add("paused");
+        audioText.textContent = "ዜማ አጫውት";
+      }
+
+      audioBtn.addEventListener("click", () => {
+        if (isPlayingAudio) {
+          stopPianoMusic();
+        } else {
+          startPianoMusic();
+        }
+      });
+
+      // 4. Floating Stars/Hearts Canvas
+      const canvas = document.getElementById("ambient-canvas");
+      const ctx = canvas.getContext("2d");
+      let particles = [];
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      class Particle {
+        constructor() {
+          this.reset();
+        }
+
+        reset() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height + canvas.height;
+          this.size = Math.random() * 2.5 + 0.8;
+          this.speedY = -(Math.random() * 0.4 + 0.2);
+          this.speedX = (Math.random() - 0.5) * 0.2;
+          this.opacity = Math.random() * 0.5 + 0.2;
+          this.isHeart = Math.random() > 0.65;
+        }
+
+        update() {
+          this.y += this.speedY;
+          this.x += this.speedX;
+
+          if (this.y < -20 || this.x < -20 || this.x > canvas.width + 20) {
+            this.reset();
+            this.y = canvas.height + 10;
+          }
+        }
+
+        draw() {
+          ctx.save();
+          ctx.globalAlpha = this.opacity;
+          ctx.fillStyle = this.isHeart ? "#ff758c" : "#e0a96d";
+          ctx.shadowBlur = 6;
+          ctx.shadowColor = "#ff2a6d";
+
+          if (this.isHeart) {
+            ctx.beginPath();
+            const topCurve = this.size * 0.3;
+            ctx.moveTo(this.x, this.y + topCurve);
+            ctx.bezierCurveTo(this.x, this.y, this.x - this.size / 2, this.y, this.x - this.size / 2, this.y + topCurve);
+            ctx.bezierCurveTo(this.x - this.size / 2, this.y + (this.size + topCurve) / 2, this.x, this.y + this.size, this.x, this.y + this.size);
+            ctx.bezierCurveTo(this.x, this.y + this.size, this.x + this.size / 2, this.y + (this.size + topCurve) / 2, this.x + this.size / 2, this.y + topCurve);
+            ctx.bezierCurveTo(this.x + this.size / 2, this.y, this.x, this.y, this.x, this.y + topCurve);
+            ctx.closePath();
+            ctx.fill();
+          } else {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      }
+
+      const particleCount = Math.min(Math.floor(window.innerWidth / 15), 65);
+      for (let i = 0; i < particleCount; i++) {
+        const p = new Particle();
+        p.y = Math.random() * canvas.height;
+        particles.push(p);
+      }
+
+      function animateCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p) => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animateCanvas);
+      }
+      animateCanvas();
+    </script>
+  </body>
+</html>
